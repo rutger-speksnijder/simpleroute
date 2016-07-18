@@ -103,27 +103,6 @@ class Router {
     }
 
     /**
-     * Parse request method
-     *
-     * Parses the request method.
-     *
-     * @return string The request method.
-     */
-    public function parseRequestMethod() {
-        $method = strtolower($_SERVER['REQUEST_METHOD']);
-
-        // Check for different post methods
-        if ($method == 'post' && isset($_SERVER['HTTP_X_HTTP_METHOD'])) {
-            if ($_SERVER['HTTP_X_HTTP_METHOD'] == 'DELETE') {
-                $method = 'delete';
-            } elseif ($_SERVER['HTTP_X_HTTP_METHOD'] == 'PUT') {
-                $method = 'put';
-            }
-        }
-        return $method;
-    }
-
-    /**
      * Add
      *
      * Adds a route to the router.
