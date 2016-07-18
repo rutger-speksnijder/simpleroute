@@ -297,6 +297,10 @@ class Router {
         // Check if we have a url
         if (!$this->url || trim($this->url) == '') {
             $this->url = '';
+        } else {
+            if (substr($this->url, 0, 1) !== '/') {
+                $this->url = '/' . $this->url;
+            }
         }
 
         // Check if the absolute route exists in our routes array
