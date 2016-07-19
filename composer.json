@@ -1,0 +1,23 @@
+{
+    "name": "rutger/simpleroute",
+    "description": "A simple and easy to use router for PHP.",
+    "keywords": ["router", "route", "php", "basic", "easy", "simple", "library"],
+    "homepage": "https://github.com/rutger-speksnijder/simpleroute",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rutger Speksnijder",
+            "email": "rutgerspeksnijder@hotmail.com",
+            "homepage": "https://github.com/rutger-speksnijder",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SimpleRoute\\": "src/"
+        }
+    }
+}

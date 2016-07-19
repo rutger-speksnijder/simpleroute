@@ -1,5 +1,10 @@
 # Simple Route
 
+[![Latest Stable Version](https://poser.pugx.org/rutger/simpleroute/v/stable)](https://packagist.org/packages/rutger/simpleroute)
+[![Total Downloads](https://poser.pugx.org/rutger/simpleroute/downloads)](https://packagist.org/packages/rutger/simpleroute)
+[![License](https://poser.pugx.org/rutger/simpleroute/license)](https://packagist.org/packages/rutger/simpleroute)
+[![Build Status](https://travis-ci.org/rutger-speksnijder/simpleroute.svg?branch=master)](https://travis-ci.org/rutger-speksnijder/simpleroute)
+
 Simple and easy to use router for PHP.
 
 ## Features
