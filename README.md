@@ -7,7 +7,7 @@
 [![License](https://poser.pugx.org/rutger/simpleroute/license)](https://packagist.org/packages/rutger/simpleroute)
 
 
-Simple and easy to use router for PHP.
+A simple and easy to use router for PHP.
 
 ## Features
 
