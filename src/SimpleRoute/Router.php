@@ -25,16 +25,14 @@
 namespace SimpleRoute;
 
 /**
- * Router
- *
  * Router class for routing routes to callables.
  *
  * @author Rutger Speksnijder
  * @since SimpleRoute 1.0.0
  * @license https://github.com/rutger-speksnijder/simpleroute/blob/master/LICENSE
  */
-class Router {
-
+class Router
+{
     /**
      * The array with routes and their callables.
      * @var array
@@ -63,71 +61,64 @@ class Router {
     private $url;
 
     /**
-     * Construct
-     *
      * Constructs a new instance of the Router object.
      *
      * @param string $method The request method.
      * @param string $url The request url.
      */
-    public function __construct($method = 'get', $url = '') {
+    public function __construct($method = 'get', $url = '')
+    {
         $this->method = $method;
         $this->url = $url;
     }
 
     /**
-     * Set method
-     *
      * Sets the method.
      *
      * @param string $method The method.
      *
      * @return $this The current object.
      */
-    public function setMethod($method) {
+    public function setMethod($method)
+    {
         $this->method = strtolower($method);
         return $this;
     }
 
     /**
-     * Get method
-     *
      * Gets the request method.
      *
      * @return string The request method.
      */
-    public function getMethod() {
+    public function getMethod()
+    {
         return $this->method;
     }
 
     /**
-     * Set url
-     *
      * Sets the request url.
      *
      * @param string $url The url.
      *
      * @return $this The current object.
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
         return $this;
     }
 
     /**
-     * Get url
-     *
      * Gets the request url.
      *
      * @return string The url.
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 
     /**
-     * Add
-     *
      * Adds a route to the router.
      *
      * @param string $route The route.
@@ -136,105 +127,97 @@ class Router {
      *
      * @return $this The current object.
      */
-    public function add($route, $callable, $type = 'any') {
+    public function add($route, $callable, $type = 'any')
+    {
         $this->routes[strtolower($type)][$route] = $callable;
         return $this;
     }
 
     /**
-     * Get
-     *
      * Adds a route to the router using type "get".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function get($route, $callable) {
+    public function get($route, $callable)
+    {
         return $this->add($route, $callable, 'get');
     }
 
     /**
-     * Post
-     *
      * Adds a route to the router using type "post".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function post($route, $callable) {
+    public function post($route, $callable)
+    {
         return $this->add($route, $callable, 'post');
     }
 
     /**
-     * Put
-     *
      * Adds a route to the router using type "put".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function put($route, $callable) {
+    public function put($route, $callable)
+    {
         return $this->add($route, $callable, 'put');
     }
 
     /**
-     * Delete
-     *
      * Adds a route to the router using type "delete".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function delete($route, $callable) {
+    public function delete($route, $callable)
+    {
         return $this->add($route, $callable, 'delete');
     }
 
     /**
-     * Head
-     *
      * Adds a route to the router using type "head".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function head($route, $callable) {
+    public function head($route, $callable)
+    {
         return $this->add($route, $callable, 'head');
     }
 
     /**
-     * Options
-     *
      * Adds a route to the router using type "options".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function options($route, $callable) {
+    public function options($route, $callable)
+    {
         return $this->add($route, $callable, 'options');
     }
 
     /**
-     * Patch
-     *
      * Adds a route to the router using type "patch".
      *
      * @param @see \SimpleRoute\Router::add.
      *
      * @return @see \SimpleRoute\Router::add.
      */
-    public function patch($route, $callable) {
+    public function patch($route, $callable)
+    {
         return $this->add($route, $callable, 'patch');
     }
 
     /**
-     * Remove
-     *
      * Removes a route.
      *
      * @param string $route The route to remove.
@@ -242,7 +225,8 @@ class Router {
      *
      * @return \SimpleRoute\Router The current object.
      */
-    public function remove($route, $type = 'any') {
+    public function remove($route, $type = 'any')
+    {
         if (isset($this->routes[$type][$route])) {
             unset($this->routes[$type][$route]);
         }
@@ -250,8 +234,6 @@ class Router {
     }
 
     /**
-     * Get methods by route
-     *
      * Returns an array of methods defined for a specific route.
      * Useful for an "OPTIONS" request.
      *
@@ -259,7 +241,8 @@ class Router {
      *
      * @return array An array with methods.
      */
-    public function getMethodsByRoute($route) {
+    public function getMethodsByRoute($route)
+    {
         if (!$route) {
             return array();
         }
@@ -287,15 +270,14 @@ class Router {
     }
 
     /**
-     * Execute
-     *
      * Executes the router based on the url.
      *
      * @throws Exception Throws an exception if no location was set and no default route was found.
      *
      * @return mixed The result of the callable method.
      */
-    public function execute() {
+    public function execute()
+    {
         // Check if we have a url
         if (!$this->url || trim($this->url) == '') {
             $this->url = '/';

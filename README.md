@@ -70,34 +70,49 @@ You can also remove routes using the remove method.
 
 ```php
 // Basic example, executes for all request methods.
-$router->add('/example', function() {
-    echo 'Example.';
-});
+$router->add(
+    '/example',
+    function()
+    {
+        echo 'Example.';
+    }
+);
 
 // Not found route
-$router->add('/', function() {
-    echo 'Not found.';
-});
+$router->add(
+    '/',
+    function() {
+        echo 'Not found.';
+    }
+);
 
 // Get example
-$router->get('/home', function() {
-    echo 'Homepage';
-});
+$router->get(
+    '/home',
+    function() {
+        echo 'Homepage';
+    }
+);
 
 // Head example
 // Head requests should not return a body.
-$router->head('/user/([0-9]+)', function($id) {
-    // Check if the user exists
-    if ($id == 123) {
-        header('HTTP/1.1 200 OK');
-    } else {
-        header('HTTP/1.1 404 Not Found');
+$router->head(
+    '/user/([0-9]+)',
+    function($id) {
+        // Check if the user exists
+        if ($id == 123) {
+            header('HTTP/1.1 200 OK');
+        } else {
+            header('HTTP/1.1 404 Not Found');
+        }
     }
-});
+);
 
 // Example using a class with a method
-class Controller {
-    public function example() {
+class Controller
+{
+    public function example()
+    {
         echo 'Controller example';
     }
 }

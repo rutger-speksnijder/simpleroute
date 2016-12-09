@@ -3,15 +3,17 @@ namespace Test;
 
 use \SimpleRoute\Router;
 
-class RouterTest extends \PHPUnit_Framework_TestCase {
-
-    public function testCanNotExecuteWhenNoEmptyRouteIsSet() {
+class RouterTest extends \PHPUnit_Framework_TestCase
+{
+    public function testCanNotExecuteWhenNoEmptyRouteIsSet()
+    {
         $this->setExpectedException('Exception');
         $r = new Router;
         $r->execute();
     }
 
-    public function testCanExecute() {
+    public function testCanExecute()
+    {
         $r = new Router;
         $r->add('', function() {});
         $r->add('/test', function() {
