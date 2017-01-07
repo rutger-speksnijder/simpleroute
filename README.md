@@ -8,6 +8,9 @@
 
 A simple and easy to use router for PHP.
 
+## Todo
+ - Route ending in slash
+
 ## Features
 
  - Easy to use
