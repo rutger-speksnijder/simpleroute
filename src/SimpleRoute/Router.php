@@ -2,7 +2,7 @@
 /*
     The MIT License (MIT)
 
-    Copyright (c) 2016 Rutger Speksnijder
+    Copyright (c) 2017 Rutger Speksnijder
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ class Router
 {
     /**
      * The array with routes and their callables.
-     * @var array
+     * @var array.
      */
     private $routes = [
         'any' => [],
@@ -50,26 +50,41 @@ class Router
 
     /**
      * The request method.
-     * @var string
+     * @var string.
      */
     private $method = 'get';
 
     /**
      * The request url.
-     * @var string
+     * @var string.
      */
     private $url;
 
     /**
      * Constructs a new instance of the Router object.
      *
-     * @param string $method The request method.
      * @param string $url The request url.
      */
-    public function __construct($method = 'get', $url = '')
+    public function __construct($url = '')
     {
-        $this->method = $method;
+        // Set the url
         $this->url = $url;
+
+        // Check if the url ends with a slash
+        if ($this->url && substr($this->url, -1) !== '/') {
+            $this->url .= '/';
+        }
+
+        // Set the request method
+        $this->method = 'get';
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $this->method = strtolower($_SERVER['REQUEST_METHOD']);
+
+            // Check if the method is post and the override header is set
+            if (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+                $this->method = strtolower($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+            }
+        }
     }
 
     /**
@@ -129,6 +144,12 @@ class Router
      */
     public function add($route, $callable, $type = 'any')
     {
+        // Check if the route ends with a forward slash
+        if ($route && substr($route, -1) !== '/') {
+            $route .= '/';
+        }
+
+        // Add the route
         $this->routes[strtolower($type)][$route] = $callable;
         return $this;
     }
@@ -258,7 +279,7 @@ class Router
                 }
 
                 // Check if the route matches
-                $regex = '/^' . str_replace('/', '\/', $availableRoute) . '$/im';
+                $regex = '/^' . str_replace('/', '\/', $availableRoute) . '/Uim';
                 if (preg_match($regex, $route) === 1) {
                     $methods[] = $method;
                     continue 2;
@@ -306,7 +327,7 @@ class Router
             // Loop through the routes set for this method
             foreach ($this->routes[$method] as $route => $callable) {
                 // Check if the route matches
-                $regex = '/^' . str_replace('/', '\/', $route) . '$/im';
+                $regex = '/^' . str_replace('/', '\/', $route) . '/Uim';
                 $matches = array();
                 if (preg_match($regex, $this->url, $matches) === 1) {
                     // First value in the array is the string that matched

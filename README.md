@@ -8,9 +8,6 @@
 
 A simple and easy to use router for PHP.
 
-## Todo
- - Route ending in slash
-
 ## Features
 
  - Easy to use
@@ -51,10 +48,7 @@ This will point every request to index.php?l=REQUEST_URI. "l" can be something e
 require 'vendor/autoload.php';
 
 // Create the router
-$router = new \SimpleRoute\Router(
-    strtolower($_SERVER['REQUEST_METHOD']),
-    isset($_GET['l']) ? $_GET['l'] : ''
-);
+$router = new \SimpleRoute\Router(isset($_GET['l']) ? $_GET['l'] : '');
 ```
 
 ### Adding routes
@@ -84,7 +78,8 @@ $router->add(
 // Not found route
 $router->add(
     '/',
-    function() {
+    function()
+    {
         echo 'Not found.';
     }
 );
@@ -92,16 +87,18 @@ $router->add(
 // Get example
 $router->get(
     '/home',
-    function() {
+    function()
+    {
         echo 'Homepage';
     }
 );
 
 // Head example
-// Head requests should not return a body.
+// Head requests shouldn't return a body.
 $router->head(
     '/user/([0-9]+)',
-    function($id) {
+    function($id)
+    {
         // Check if the user exists
         if ($id == 123) {
             header('HTTP/1.1 200 OK');
@@ -142,7 +139,7 @@ Feel free to contact me at rutgerspeksnijder@hotmail.com if you have any questio
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Rutger Speksnijder
+Copyright (c) 2017 Rutger Speksnijder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
