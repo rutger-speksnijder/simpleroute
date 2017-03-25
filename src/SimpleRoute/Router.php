@@ -77,12 +77,16 @@ class Router
 
         // Set the request method
         $this->method = 'get';
+
+        // Check if the request method is set in the headers
         if (isset($_SERVER['REQUEST_METHOD'])) {
             $this->method = strtolower($_SERVER['REQUEST_METHOD']);
 
-            // Check if the method is post and the override header is set
-            if (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+            // Check if an override method is set
+            if ($this->method == 'post' && isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
                 $this->method = strtolower($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+            } elseif ($this->method == 'post' && isset($_SERVER['HTTP_X_HTTP_METHOD'])) {
+                $this->method = strtolower($_SERVER['HTTP_X_HTTP_METHOD']);
             }
         }
     }
