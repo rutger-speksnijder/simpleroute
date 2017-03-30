@@ -268,12 +268,13 @@ class Router
      */
     public function getMethodsByRoute($route)
     {
+        // Check if a route was provided
         if (!$route) {
-            return array();
+            return [];
         }
 
         // Loop through our routes
-        $methods = array();
+        $methods = [];
         foreach ($this->routes as $method => $routes) {
             foreach ($routes as $availableRoute => $callable) {
                 // Check if the available route is the same as the specified route
@@ -284,13 +285,14 @@ class Router
 
                 // Check if the route matches
                 $regex = '/^' . str_replace('/', '\/', $availableRoute) . '/Uim';
-                if (preg_match($regex, $route) === 1) {
+                if (preg_match($regex, $route, $matches) === 1 && $matches[0] === $route) {
                     $methods[] = $method;
                     continue 2;
                 }
             }
         }
 
+        // Return the methods array
         return $methods;
     }
 
@@ -316,24 +318,24 @@ class Router
         // Check if the absolute route exists in our routes array
         // - and if that route has the same type of request as the current request.
         if (isset($this->routes[$this->method][$this->url])) {
-            return $this->routes[$this->method][$this->url]();
+            return call_user_func_array($this->routes[$this->method][$this->url], []);
         }
 
         // Check if the absolute route exists in our routes array
         // - and if that route has the "any" type.
         if (isset($this->routes['any'][$this->url])) {
-            return $this->routes['any'][$this->url]();
+            return call_user_func_array($this->routes['any'][$this->url], []);
         }
 
         // Create an array of methods to check and loop through them
-        $methods = array($this->method, 'any');
+        $methods = [$this->method, 'any'];
         foreach ($methods as $method) {
             // Loop through the routes set for this method
             foreach ($this->routes[$method] as $route => $callable) {
                 // Check if the route matches
                 $regex = '/^' . str_replace('/', '\/', $route) . '/Uim';
-                $matches = array();
-                if (preg_match($regex, $this->url, $matches) === 1) {
+                $matches = [];
+                if (preg_match($regex, $this->url, $matches) === 1 && $matches[0] === $this->url) {
                     // First value in the array is the string that matched
                     array_shift($matches);
 
@@ -351,6 +353,6 @@ class Router
         }
 
         // Return the empty route's callable
-        return $this->routes['any']['/']();
+        return call_user_func_array($this->routes['any']['/'], []);
     }
 }
