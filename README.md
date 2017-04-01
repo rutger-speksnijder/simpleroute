@@ -3,7 +3,6 @@
 [![Total Downloads](https://poser.pugx.org/rutger/simpleroute/downloads)](https://packagist.org/packages/rutger/simpleroute)
 [![Latest Stable Version](https://poser.pugx.org/rutger/simpleroute/v/stable)](https://packagist.org/packages/rutger/simpleroute)
 [![Build Status](https://travis-ci.org/rutger-speksnijder/simpleroute.svg?branch=master)](https://travis-ci.org/rutger-speksnijder/simpleroute)
-[![Latest Unstable Version](https://poser.pugx.org/rutger/simpleroute/v/unstable)](https://packagist.org/packages/rutger/simpleroute)
 [![License](https://poser.pugx.org/rutger/simpleroute/license)](https://packagist.org/packages/rutger/simpleroute)
 
 A simple and easy to use router for PHP.
@@ -26,6 +25,7 @@ composer require rutger/simpleroute
 ## Usage
 
 Make sure all requests point to a file in which you will handle the requests.
+See the "Example" directory for the ".htaccess" and "index.php" file, which contain the examples shown below.
 
 ### Rewrite
 
@@ -33,13 +33,11 @@ With apache you can use the following htaccess lines for this:
 
 ```
 RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php?l=$1 [L,QSA,NC]
+RewriteRule ^ index.php [L]
 ```
 
-This will point every request to index.php?l=REQUEST_URI. "l" can be something else, I just chose something short here.
+This will point every request to index.php where you can use $_SERVER['REQUEST_URI'] as the request URI.
 
 ### Creating the router
 
@@ -48,7 +46,7 @@ This will point every request to index.php?l=REQUEST_URI. "l" can be something e
 require 'vendor/autoload.php';
 
 // Create the router
-$router = new \SimpleRoute\Router(isset($_GET['l']) ? $_GET['l'] : '');
+$router = new \SimpleRoute\Router($_SERVER['REQUEST_URI']);
 ```
 
 ### Adding routes
@@ -117,7 +115,7 @@ class Controller
     }
 }
 $controller = new Controller;
-$router->add('/controller/example', array($controller, 'example'));
+$router->add('/controller/example', [$controller, 'example']);
 ```
 
 ### Executing the router

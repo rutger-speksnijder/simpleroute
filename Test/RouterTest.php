@@ -3,28 +3,56 @@ namespace Test;
 
 use \SimpleRoute\Router;
 
-class RouterTest extends \PHPUnit_Framework_TestCase
-{
-    public function testCanNotExecuteWhenNoEmptyRouteIsSet()
+if (version_compare(PHP_VERSION, '7.0', '>=')) {
+    class RouterTest extends \PHPUnit\Framework\TestCase
     {
-        $this->setExpectedException('Exception');
-        $r = new Router;
-        $r->execute();
+        public function testCanNotExecuteWhenNoEmptyRouteIsSet()
+        {
+            $this->expectException('Exception');
+            $r = new Router;
+            $r->execute();
+        }
+
+        public function testCanExecute()
+        {
+            $r = new Router;
+            $r->add('/', function() {});
+            $r->add('/test', function() {
+                return 'test';
+            });
+
+            $r->setUrl('/test');
+
+            $expectedResult = 'test';
+            $result = $r->execute();
+
+            $this->assertEquals($expectedResult, $result);
+        }
     }
-
-    public function testCanExecute()
+} else {
+    class RouterTest extends \PHPUnit_Framework_TestCase
     {
-        $r = new Router;
-        $r->add('', function() {});
-        $r->add('/test', function() {
-            return 'test';
-        });
+        public function testCanNotExecuteWhenNoEmptyRouteIsSet()
+        {
+            $this->setExpectedException('Exception');
+            $r = new Router;
+            $r->execute();
+        }
 
-        $r->setUrl('/test');
+        public function testCanExecute()
+        {
+            $r = new Router;
+            $r->add('/', function() {});
+            $r->add('/test', function() {
+                return 'test';
+            });
 
-        $expectedResult = 'test';
-        $result = $r->execute();
+            $r->setUrl('/test');
 
-        $this->assertEquals($expectedResult, $result);
+            $expectedResult = 'test';
+            $result = $r->execute();
+
+            $this->assertEquals($expectedResult, $result);
+        }
     }
 }
