@@ -124,6 +124,12 @@ class Router
     public function setUrl($url)
     {
         $this->url = $url;
+
+        // Check if the url ends with a slash
+        if ($this->url && substr($this->url, -1) !== '/') {
+            $this->url .= '/';
+        }
+
         return $this;
     }
 
