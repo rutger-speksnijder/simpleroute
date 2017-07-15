@@ -354,8 +354,8 @@ class Router
         // No route found, check if we have an empty route.
         // - We should always have an empty route.
         if (!isset($this->routes['any']['/'])) {
-            // No empty route found, throw an exception
-            throw new \Exception("No \"not found\" route set.");
+            header('HTTP/1.1 404 Not Found');
+            exit;
         }
 
         // Return the empty route's callable
